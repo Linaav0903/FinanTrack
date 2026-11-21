@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block bodyclass %}app{% endblock %}
+{% block body %}
+<div class="shell">
+    <aside class="sidebar">
+        <a href="{{ url_for('dashboard') }}" class="logo">Finan<span>Track</span></a>
+
+        <nav class="side-nav" aria-label="Principal">
+            <a href="{{ url_for('dashboard') }}" class="{{ 'active' if request.endpoint == 'dashboard' }}">Panel principal</a>
+            <a href="{{ url_for('gastos') }}" class="{{ 'active' if request.endpoint == 'gastos' }}">Mis gastos</a>
+            <a href="{{ url_for('ahorro') }}" class="{{ 'active' if request.endpoint == 'ahorro' }}">Ahorro</a>
+            <a href="{{ url_for('presupuesto') }}" class="{{ 'active' if request.endpoint == 'presupuesto' }}">Presupuesto</a>
+        </nav>
+
+        <div class="side-user">
+            <div class="who">
+                <span class="avatar">{{ (user_name or 'U')[:1]|upper }}</span>
+                <span>{{ user_name or 'Usuario' }}</span>
+            </div>
+            <form method="post" action="{{ url_for('logout') }}">
+                <button type="submit" class="link-btn">Cerrar sesión</button>
+            </form>
+        </div>
+    </aside>
+
+    <main class="main">
+        {% block content %}{% endblock %}
+    </main>
+</div>
+{% endblock %}

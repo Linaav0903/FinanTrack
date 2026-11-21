@@ -1,0 +1,215 @@
+{% extends "base.html" %}
+{% block title %}FinanTrack | Control de gastos y ahorro{% endblock %}
+{% block body %}
+<header class="site-nav">
+    <a href="{{ url_for('inicio') }}" class="logo">Finan<span>Track</span></a>
+    <nav>
+        {% if logged_in %}
+        <a href="{{ url_for('dashboard') }}" class="btn-primary">Ir a mi panel</a>
+        {% else %}
+        <a href="{{ url_for('login') }}">Iniciar sesión</a>
+        <a href="{{ url_for('registro') }}" class="btn-primary">Crear cuenta</a>
+        {% endif %}
+    </nav>
+</header>
+
+<main>
+    <section class="hero">
+        <div class="hero-text">
+            <h1>Sabe en qué se va tu dinero y cuánto te sobra para ahorrar.</h1>
+            <p>Registra tus gastos, ponles un límite al mes y avanza hacia tus metas de ahorro, todo en un solo lugar.</p>
+            <div class="botones">
+                {% if logged_in %}
+                <a href="{{ url_for('dashboard') }}" class="btn-primary">Ir a mi panel</a>
+                {% else %}
+                <a href="{{ url_for('registro') }}" class="btn-primary">Crear cuenta gratis</a>
+                <a href="{{ url_for('login') }}" class="btn-secondary">Ya tengo cuenta</a>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="receipt" aria-label="Ejemplo de resumen mensual">
+            <h2>Así se ve tu mes</h2>
+            <div class="receipt-row"><span><i style="background:#2CCB9F"></i>Comida</span><span class="num">$295.50</span></div>
+            <div class="receipt-row"><span><i style="background:#1B2B4B"></i>Escuela</span><span class="num">$300.00</span></div>
+            <div class="receipt-row"><span><i style="background:#E3A21A"></i>Entretenimiento</span><span class="num">$150.00</span></div>
+            <div class="receipt-row"><span><i style="background:#C93C2F"></i>Transporte</span><span class="num">$45.00</span></div>
+            <div class="receipt-total"><span>Gastado</span><strong class="num">$790.50</strong></div>
+            <div class="bar warning"><i style="width:79%"></i></div>
+            <small>79% de tu presupuesto de $1,000.00</small>
+        </div>
+    </section>
+
+    <section class="beneficios" id="beneficios">
+        <h2>Todo lo que necesitas para llevar tus cuentas</h2>
+        <div class="benefit-grid">
+
+    <!-- CONTROL DE GASTOS -->
+    <article class="benefit-card">
+    
+<svg class="benefit-icon pig-icon" viewBox="0 0 120 100"
+     xmlns="http://www.w3.org/2000/svg"
+     fill="none" stroke="currentColor"
+     stroke-width="2.2" stroke-linecap="round"
+     stroke-linejoin="round">
+
+    <!-- CUERPO DEL CERDITO -->
+    <g class="pig-body">
+
+        <!-- Cuerpo y oreja -->
+        <path d="
+            M30 44
+            C26 38 23 30 22 24
+            L39 32
+            C48 26 59 25 70 28
+            C86 31 96 43 98 55
+            C106 55 110 60 108 66
+            C107 72 101 75 94 72
+            C90 82 80 86 67 86
+            H43
+            C31 86 24 79 22 68
+            C20 58 23 49 30 44
+            Z"/>
+
+        <!-- Patitas -->
+        <path d="M38 82 L36 92 H47 L50 85"/>
+        <path d="M73 85 L76 92 H87 L85 80"/>
+
+        <!-- Hocico -->
+        <ellipse cx="101" cy="64" rx="8" ry="7"/>
+
+        <!-- Orificios del hocico -->
+        <circle cx="99" cy="62" r="1"/>
+        <circle cx="103" cy="66" r="1"/>
+
+        <!-- Ojo -->
+        <circle cx="82" cy="47" r="2.3"/>
+
+        <!-- Sonrisa -->
+        <path d="M91 75 Q85 79 80 76"/>
+
+        <!-- Colita -->
+        <path d="
+            M24 53
+            C15 51 12 44 16 41
+            C20 38 25 42 23 46
+            C22 48 19 48 18 46"/>
+
+        <!-- Ranura para la moneda -->
+        <path d="M53 32 Q59 29 65 32"/>
+
+    </g>
+
+    <!-- MONEDA -->
+    <g class="pig-coin" stroke="#55D6B0">
+        <circle cx="57" cy="13" r="9"/>
+        <path d="M57 8 V18 M53 11 H60 M54 16 H60"/>
+    </g>
+
+    <!-- INDICADOR DE CAÍDA -->
+    <path d="M57 24 V34"
+          stroke="#55D6B0"
+          stroke-dasharray="2 3"/>
+
+</svg>
+
+        <h3>Control de gastos</h3>
+        <p>Anota cada gasto con su categoría y fecha, y edítalo cuando lo necesites.</p>
+    </article>
+
+
+    <!-- ESTADÍSTICAS -->
+    <article class="benefit-card">
+        <svg class="benefit-icon chart-icon" viewBox="0 0 120 100"
+             xmlns="http://www.w3.org/2000/svg"
+             fill="none" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round"
+             stroke-linejoin="round">
+
+            <path d="M18 80 H105"/>
+            <path d="M25 80 V65 H43 V80"
+                  class="chart-bar"/>
+            <path d="M51 80 V48 H69 V80"
+                  class="chart-bar"/>
+            <path d="M77 80 V30 H95 V80"
+                  class="chart-bar"/>
+
+   
+<!-- Línea verde de fondo -->
+<path d="M25 48 L48 34 L66 39 L94 13"
+      stroke="#55D6B0"
+      opacity="0.35"/>
+
+<!-- Segmento luminoso en movimiento -->
+<path class="chart-line-motion"
+      d="M25 48 L48 34 L66 39 L94 13"
+      pathLength="100"
+      stroke="#55D6B0"
+      stroke-width="2.5"
+      stroke-dasharray="14 86"/>
+
+<!-- Punta de la flecha -->
+<path d="M80 13 H94 V27"
+      stroke="#55D6B0"/>
+
+        </svg>
+
+        <h3>Estadísticas</h3>
+        <p>Compara semanas y meses y mira en qué categorías se va tu dinero.</p>
+    </article>
+
+
+    <!-- ORGANIZACIÓN -->
+    <article class="benefit-card">
+        <svg class="benefit-icon folders-icon" viewBox="0 0 120 100"
+             xmlns="http://www.w3.org/2000/svg"
+             fill="none" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round"
+             stroke-linejoin="round">
+
+            <g class="folder folder-back">
+                <path d="M18 37 H48 L56 45 H100
+                         V77 H18 Z"/>
+            </g>
+
+            <g class="folder folder-middle">
+                <path d="M13 29 H44 L52 37 H94
+                         V70 H13 Z"/>
+            </g>
+
+            <g class="folder folder-front">
+                <path d="M24 43 H52 L60 51 H105
+                         V84 H24 Z"
+                      stroke="#55D6B0"/>
+            </g>
+        </svg>
+
+        <h3>Organización</h3>
+        <p>Fija límites mensuales y crea metas de ahorro para lo que viene.</p>
+    </article>
+
+
+        </div>
+    </section>
+
+    <section class="pasos">
+        <h2>Empieza en tres pasos</h2>
+        <ol>
+            <li><h3>Registra tus gastos</h3><p>Importe, categoría y fecha. Tarda unos segundos.</p></li>
+            <li><h3>Define límites y metas</h3><p>Elige cuánto quieres gastar al mes y para qué quieres ahorrar.</p></li>
+            <li><h3>Revisa tu panel</h3><p>Compara con el mes anterior y ajusta antes de pasarte.</p></li>
+        </ol>
+    </section>
+
+    {% if not logged_in %}
+    <section class="cta-band">
+        <h2>Tu próximo mes puede salir mejor.</h2>
+        <a href="{{ url_for('registro') }}" class="btn-primary">Crear cuenta gratis</a>
+    </section>
+    {% endif %}
+</main>
+
+<footer class="site-footer">
+    <p>© 2026 FinanTrack | Control inteligente de tus finanzas</p>
+</footer>
+{% endblock %}

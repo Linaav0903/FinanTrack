@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}Iniciar sesión | FinanTrack{% endblock %}
+{% block body %}
+<div class="auth-layout">
+    <section class="auth-brand">
+        <a href="{{ url_for('inicio') }}" class="logo">Finan<span>Track</span></a>
+        <div>
+            <h2>Tu mes, a la vista.</h2>
+            <p>Registra gastos, fija límites y ahorra para lo que sigue.</p>
+        </div>
+        <ul class="auth-points">
+            <li>Gastos organizados por categoría</li>
+            <li>Comparación con el mes anterior</li>
+            <li>Metas de ahorro con progreso</li>
+        </ul>
+    </section>
+
+    <section class="auth-form-wrap">
+        <div class="auth-card">
+            <h1>Inicia sesión</h1>
+            <p class="sub">Entra para ver tu resumen.</p>
+
+            {% for categoria, mensaje in get_flashed_messages(with_categories=true) %}
+            <p class="alert alert-{{ categoria }}" role="alert">{{ mensaje }}</p>
+            {% endfor %}
+
+            <form method="post" action="{{ url_for('login') }}">
+                <div class="field">
+                    <label for="correo">Correo electrónico</label>
+                    <input type="email" id="correo" name="correo" value="{{ correo }}"
+                           placeholder="tucorreo@ejemplo.com" autocomplete="email" required>
+                </div>
+                <div class="field">
+                    <label for="password">Contraseña</label>
+                    <div class="pass-wrap">
+                        <input type="password" id="password" name="password"
+                               autocomplete="current-password" required>
+                        <button type="button" data-toggle="password" aria-label="Mostrar contraseña">Mostrar</button>
+                    </div>
+                </div>
+                <button type="submit" class="btn-primary">Iniciar sesión</button>
+            </form>
+
+            <p class="alt">¿No tienes cuenta? <a href="{{ url_for('registro') }}">Crea una aquí</a></p>
+            <p class="alt"><a href="{{ url_for('inicio') }}">Volver al inicio</a></p>
+        </div>
+    </section>
+</div>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/auth.js') }}"></script>{% endblock %}

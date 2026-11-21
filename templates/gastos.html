@@ -1,0 +1,60 @@
+{% extends "app_base.html" %}
+{% block title %}Mis gastos | FinanTrack{% endblock %}
+{% block content %}
+<header class="page-head">
+    <div>
+        <h1>Mis gastos</h1>
+        <p>Registra, filtra, edita y elimina tus movimientos.</p>
+    </div>
+</header>
+
+<article class="panel">
+    <div class="panel-head"><h2 id="form-title">Nuevo gasto</h2></div>
+    <form id="form-gasto">
+        <div class="form-grid">
+            <div class="field"><label for="amount">Importe</label>
+                <input type="number" id="amount" step="0.01" min="0.01" placeholder="0.00" required></div>
+            <div class="field"><label for="category">Categoría</label>
+                <input type="text" id="category" list="categorias" maxlength="50" placeholder="Comida" required></div>
+            <div class="field"><label for="date">Fecha</label>
+                <input type="date" id="date" required></div>
+            <div class="field"><label for="description">Descripción (opcional)</label>
+                <input type="text" id="description" maxlength="200" placeholder="Tacos con amigos"></div>
+        </div>
+        <div class="form-actions" style="margin-top:16px">
+            <button type="submit" class="btn btn-primary" id="btn-guardar">Guardar gasto</button>
+            <button type="button" class="btn btn-ghost" id="btn-cancelar" hidden>Cancelar edición</button>
+        </div>
+        <p id="msg" class="msg" role="alert"></p>
+    </form>
+    <datalist id="categorias"></datalist>
+</article>
+
+<article class="panel">
+    <div class="panel-head"><h2>Historial</h2></div>
+    <div class="filters">
+        <div class="field"><label for="f-start">Desde</label><input type="date" id="f-start"></div>
+        <div class="field"><label for="f-end">Hasta</label><input type="date" id="f-end"></div>
+        <div class="field"><label for="f-cat">Categoría</label><input type="text" id="f-cat" list="categorias" placeholder="Todas"></div>
+        <div class="form-actions">
+            <button type="button" id="f-btn" class="btn btn-primary">Filtrar</button>
+            <button type="button" id="f-clear" class="btn btn-ghost">Limpiar</button>
+        </div>
+    </div>
+
+    <div class="table-wrap">
+        <table class="tabla">
+            <thead>
+                <tr><th>Fecha</th><th>Categoría</th><th>Descripción</th><th class="r">Importe</th><th></th></tr>
+            </thead>
+            <tbody id="lista"></tbody>
+        </table>
+    </div>
+    <p id="vacio" class="empty" hidden>No hay gastos con estos filtros. Registra uno arriba o cambia el filtro.</p>
+    <div class="table-foot"><span id="conteo">0 gastos</span><span>Total mostrado: <strong id="total" class="num">$0.00</strong></span></div>
+</article>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/common.js') }}"></script>
+<script src="{{ url_for('static', filename='js/gastos.js') }}"></script>
+{% endblock %}

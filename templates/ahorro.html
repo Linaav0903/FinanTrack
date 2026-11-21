@@ -1,0 +1,46 @@
+{% extends "app_base.html" %}
+{% block title %}Ahorro | FinanTrack{% endblock %}
+{% block content %}
+<header class="page-head">
+    <div>
+        <h1>Ahorro</h1>
+        <p>Crea metas, abona cuando puedas y mira tu avance.</p>
+    </div>
+</header>
+
+<section class="ledger cols-3" aria-label="Resumen de ahorro">
+    <div class="ledger-item"><span>Total ahorrado</span><strong id="a-total">$0.00</strong><small>en todas tus metas</small></div>
+    <div class="ledger-item"><span>Metas</span><strong id="a-count">0</strong><small>creadas</small></div>
+    <div class="ledger-item"><span>Metas cumplidas</span><strong id="a-done">0</strong><small>objetivo alcanzado</small></div>
+</section>
+
+<section class="grid-2">
+    <article class="panel">
+        <h2>Nueva meta</h2>
+        <form id="form-meta">
+            <div class="form-grid" style="grid-template-columns:1fr">
+                <div class="field"><label for="g-name">Nombre de la meta</label>
+                    <input type="text" id="g-name" maxlength="80" placeholder="Laptop nueva" required></div>
+                <div class="field"><label for="g-target">Monto objetivo</label>
+                    <input type="number" id="g-target" step="0.01" min="0.01" placeholder="0.00" required></div>
+                <div class="field"><label for="g-deadline">Fecha límite (opcional)</label>
+                    <input type="date" id="g-deadline"></div>
+            </div>
+            <div class="form-actions" style="margin-top:16px"><button type="submit" class="btn btn-primary">Crear meta</button></div>
+            <p id="msg" class="msg" role="alert"></p>
+        </form>
+    </article>
+    <article class="panel">
+        <h2>Ahorro por mes</h2>
+        <div id="savings-chart" class="chart-wrap"><p>Cargando…</p></div>
+    </article>
+</section>
+
+<h2 style="margin:28px 0 16px;font-size:22px">Mis metas</h2>
+<section id="goals" class="goals"><p class="empty">Cargando…</p></section>
+{% endblock %}
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="{{ url_for('static', filename='js/common.js') }}"></script>
+<script src="{{ url_for('static', filename='js/ahorro.js') }}"></script>
+{% endblock %}
