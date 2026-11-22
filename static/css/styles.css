@@ -381,3 +381,28 @@ input:focus, select:focus { outline: none; border-color: var(--mint-d); box-shad
         animation: none !important;
     }
 }
+
+/* Botón Descargar CSV */
+#btn-exportar-csv {
+    background-color: #29c99d;
+    color: #ffffff;
+    opacity: 1;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.2s ease,
+                color 0.2s ease;
+}
+
+/* Cuando pasas el ratón */
+#btn-exportar-csv:hover {
+    background-color: #20b88e;
+    color: #ffffff;
+    text-decoration: none;
+}
+
+/* Cuando el botón recibe el foco */
+#btn-exportar-csv:focus-visible {
+    color: #ffffff;
+    outline: 2px solid #155c4b;
+    outline-offset: 3px;
+}
