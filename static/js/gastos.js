@@ -73,6 +73,38 @@ $("form-gasto").addEventListener("submit", async (e) => {
     await cargarLista();
   } catch (err) { $("msg").textContent = err.message; }
 });
+const btnExportarCSV = document.getElementById("btn-exportar-csv");
+
+if (btnExportarCSV) {
+    btnExportarCSV.addEventListener("click", function (evento) {
+        evento.preventDefault();
+
+        const inicio = document.getElementById("f-start").value;
+        const fin = document.getElementById("f-end").value;
+        const categoria = document.getElementById("f-cat").value.trim();
+
+        if (inicio && fin && inicio > fin) {
+            alert("La fecha inicial no puede ser posterior a la final.");
+            return;
+        }
+
+        const url = new URL(btnExportarCSV.href);
+
+        if (inicio) {
+            url.searchParams.set("start", inicio);
+        }
+
+        if (fin) {
+            url.searchParams.set("end", fin);
+        }
+
+        if (categoria && categoria.toLowerCase() !== "todas") {
+            url.searchParams.set("category", categoria);
+        }
+
+        window.location.href = url.toString();
+    });
+}
 
 $("btn-cancelar").addEventListener("click", salirDeEdicion);
 $("f-btn").addEventListener("click", recargar);
@@ -81,3 +113,69 @@ $("f-clear").addEventListener("click", () => { ["f-start", "f-end", "f-cat"].for
 llenarCategorias();
 salirDeEdicion();
 recargar();
+
+$("form-importar-csv").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const archivo = $("archivo-csv").files[0];
+    const mensaje = $("msg-importar");
+    const boton = $("btn-importar-csv");
+
+    mensaje.textContent = "";
+
+    if (!archivo) {
+        mensaje.textContent = "Selecciona un archivo CSV.";
+        return;
+    }
+
+    if (!archivo.name.toLowerCase().endsWith(".csv")) {
+        mensaje.textContent = "El archivo debe tener extensión .csv.";
+        return;
+    }
+
+    const datos = new FormData();
+    datos.append("archivo", archivo);
+
+    boton.disabled = true;
+    boton.textContent = "Importando...";
+
+    try {
+        const respuesta = await fetch("/api/expenses/import-csv", {
+            method: "POST",
+            body: datos
+        });
+
+        if (respuesta.status === 401) {
+            window.location.href = "/login";
+            return;
+        }
+
+        const resultado = await respuesta.json();
+
+        if (!respuesta.ok) {
+            throw new Error(resultado.error || "No se pudo importar el archivo.");
+        }
+
+        mensaje.textContent =
+            `Se importaron ${resultado.importados} gastos. ` +
+            `${resultado.rechazados} filas rechazadas.` +
+            (resultado.errores.length
+                ? " Detalles: " + resultado.errores.join(" | ")
+                : "");
+
+        $("form-importar-csv").reset();
+
+        // Limpiar filtros para mostrar todos los gastos importados
+        ["f-start", "f-end", "f-cat"].forEach((id) => {
+            $(id).value = "";
+        });
+
+        await cargarLista();
+
+    } catch (error) {
+        mensaje.textContent = error.message;
+    } finally {
+        boton.disabled = false;
+        boton.textContent = "Importar gastos";
+    }
+});

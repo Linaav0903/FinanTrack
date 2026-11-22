@@ -32,6 +32,15 @@
 
 <article class="panel">
     <div class="panel-head"><h2>Historial</h2></div>
+            <a
+        href="{{ url_for('expenses.exportar_csv') }}"
+        id="btn-exportar-csv"
+        class="btn btn-primary"
+        >
+        Descargar CSV
+        </a>
+
+    </div>
     <div class="filters">
         <div class="field"><label for="f-start">Desde</label><input type="date" id="f-start"></div>
         <div class="field"><label for="f-end">Hasta</label><input type="date" id="f-end"></div>
@@ -53,6 +62,43 @@
     <p id="vacio" class="empty" hidden>No hay gastos con estos filtros. Registra uno arriba o cambia el filtro.</p>
     <div class="table-foot"><span id="conteo">0 gastos</span><span>Total mostrado: <strong id="total" class="num">$0.00</strong></span></div>
 </article>
+
+<article class="panel">
+    <div class="panel-head">
+        <h2>Importar gastos desde CSV</h2>
+    </div>
+
+    <p>
+        Selecciona un archivo CSV con las columnas:
+        Fecha, Categoria, Importe y Descripcion.
+    </p>
+
+    <form id="form-importar-csv" enctype="multipart/form-data">
+        <div class="field">
+            <label for="archivo-csv">Archivo CSV</label>
+            <input
+                type="file"
+                id="archivo-csv"
+                name="archivo"
+                accept=".csv,text/csv"
+                required
+            >
+        </div>
+
+        <div class="form-actions" style="margin-top:16px">
+            <button
+                type="submit"
+                id="btn-importar-csv"
+                class="btn btn-primary"
+            >
+                Importar gastos
+            </button>
+        </div>
+
+        <p id="msg-importar" class="msg" role="status"></p>
+    </form>
+</article>
+
 {% endblock %}
 {% block scripts %}
 <script src="{{ url_for('static', filename='js/common.js') }}"></script>
